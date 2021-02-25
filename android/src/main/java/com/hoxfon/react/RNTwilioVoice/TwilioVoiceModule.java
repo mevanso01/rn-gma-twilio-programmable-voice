@@ -457,7 +457,11 @@ public class TwilioVoiceModule extends ReactContextBaseJavaModule implements Act
     }
 
     private void handleIncomingCallIntent(Intent intent) {
-        if (intent.getAction().equals(ACTION_INCOMING_CALL)) {
+        String action = "";
+        if (intent != null && intent.getAction() != null) {
+            action = intent.getAction();
+        }
+        if (action.equals(ACTION_INCOMING_CALL)) {
             if (BuildConfig.DEBUG) {
                 Log.d(TAG, "handleIncomingCallIntent");
             }
@@ -493,7 +497,7 @@ public class TwilioVoiceModule extends ReactContextBaseJavaModule implements Act
                 // TODO evaluate what more is needed at this point?
                 Log.e(TAG, "ACTION_INCOMING_CALL but not active call");
             }
-        } else if (intent.getAction().equals(ACTION_CANCEL_CALL_INVITE)) {
+        } else if (action.equals(ACTION_CANCEL_CALL_INVITE)) {
             SoundPoolManager.getInstance(getReactApplicationContext()).stopRinging();
             if (BuildConfig.DEBUG) {
                 Log.d(TAG, "activeCallInvite was cancelled by " + activeCallInvite.getFrom());
@@ -514,7 +518,7 @@ public class TwilioVoiceModule extends ReactContextBaseJavaModule implements Act
                 }
             }
             clearIncomingNotification(activeCallInvite.getCallSid());
-        } else if (intent.getAction().equals(ACTION_FCM_TOKEN)) {
+        } else if (action.equals(ACTION_FCM_TOKEN)) {
             if (BuildConfig.DEBUG) {
                 Log.d(TAG, "handleIncomingCallIntent ACTION_FCM_TOKEN");
             }
