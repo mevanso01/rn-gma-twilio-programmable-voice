@@ -457,10 +457,10 @@ public class TwilioVoiceModule extends ReactContextBaseJavaModule implements Act
     }
 
     private void handleIncomingCallIntent(Intent intent) {
-        String action = "";
-        if (intent != null && intent.getAction() != null) {
-            action = intent.getAction();
+        if (intent == null || intent.getAction() == null) {
+            return;
         }
+        String action = intent.getAction();
         if (action.equals(ACTION_INCOMING_CALL)) {
             if (BuildConfig.DEBUG) {
                 Log.d(TAG, "handleIncomingCallIntent");
